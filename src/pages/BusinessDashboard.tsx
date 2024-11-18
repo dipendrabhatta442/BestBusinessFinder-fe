@@ -1,6 +1,7 @@
 import Layout from '@/components/Layouts/Layout'
 import { Button, Card, CardContent, CardHeader, CardTitle, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Input, ScrollArea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Textarea } from '@/components/ui'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import useAuthenticate from '@/hooks/useAuthenticate'
 import useFetch from '@/hooks/useFetch'
 import useFormHandler from '@/hooks/useFormHandler'
 import API from '@/utils/api'
@@ -11,11 +12,12 @@ import { Delete, DeleteIcon, LucideDelete, RemoveFormatting } from 'lucide-react
 import React, { useState } from 'react'
 import { IconRight } from 'react-day-picker'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 function BusinessDashboard() {
+    const { authenticate } = useAuthenticate()
     const { data: businessProfile, error, loading, refetch } = useFetch('/auth/profile');
     const navigate = useNavigate();
     const [profileImage, setProfileImage] = useState<File | null>(null)
@@ -79,6 +81,7 @@ function BusinessDashboard() {
         { label: 'Retail Shop', value: 'retail-shop' },
         { label: 'Services', value: 'services' }
     ]
+    if (!authenticate) return <Navigate to={'/'} replace />;
     return (
         <Layout>
 

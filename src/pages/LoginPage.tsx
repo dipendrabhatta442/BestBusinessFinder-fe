@@ -6,7 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Button, Card, CardContent, CardHeader, CardTitle, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, Input } from '@/components/ui';
 
 import { tokenKey } from '@/utils/constant';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import useAuthenticate from '@/hooks/useAuthenticate';
 import AuthPageLayout from '@/components/Layouts/AuthPageLayout';
 import { toast } from 'sonner';
@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 const LoginPage: React.FC = () => {
     const form = useFormHandler<LoginSchemaType>(loginSchema);
     const navigate = useNavigate()
-    const { setAuthenticate } = useAuthenticate()
+    const { authenticate, setAuthenticate } = useAuthenticate()
 
     const onSubmit = async (data: LoginSchemaType) => {
         try {
@@ -27,6 +27,7 @@ const LoginPage: React.FC = () => {
             toast.error(error.message);
         }
     };
+    if (authenticate) return <Navigate to={'/'} replace />
 
     return (
         <AuthPageLayout>

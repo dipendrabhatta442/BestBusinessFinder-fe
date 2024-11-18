@@ -1,12 +1,17 @@
 import Layout from '@/components/Layouts/Layout'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
+import useAuthenticate from '@/hooks/useAuthenticate'
 import useFetch from '@/hooks/useFetch'
 import { appPublicUrl } from '@/utils/constant'
 import { Star } from 'lucide-react'
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 
 function BusinessProfilePage() {
+    const { authenticate } = useAuthenticate()
+
     const { data: businessProfile, error, loading } = useFetch('/auth/profile');
+    if (!authenticate) return <Navigate to={'/'} replace />
     return (
         <Layout>
             <div className="container mx-auto px-4 py-8 flex-1">

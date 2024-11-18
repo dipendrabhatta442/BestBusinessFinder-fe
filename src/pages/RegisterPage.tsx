@@ -7,13 +7,16 @@ import { Button, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem,
 
 import AuthPageLayout from '@/components/Layouts/AuthPageLayout';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { tokenKey } from '@/utils/constant';
 import { cn } from '@/utils/common';
 import { Check, ChevronsUpDown } from 'lucide-react';
+import useAuthenticate from '@/hooks/useAuthenticate';
 
 const RegisterPage: React.FC = () => {
     const navigate = useNavigate()
+    const { authenticate, setAuthenticate } = useAuthenticate()
+
     const form = useFormHandler<RegisterSchemaType>(registerSchema);
     const [profileImage, setProfileImage] = useState<File | null>(null)
     const onSubmit = async (data: any) => {
@@ -50,6 +53,8 @@ const RegisterPage: React.FC = () => {
         { label: 'Retail Shop', value: 'retail-shop' },
         { label: 'Services', value: 'services' }
     ]
+    if (authenticate) return <Navigate to={'/'} replace />
+
     return (
         <AuthPageLayout>
             <div className="container flex h-full items-center justify-center py-12">
@@ -162,7 +167,7 @@ const RegisterPage: React.FC = () => {
                                                                 {category?.map((catg) => (
                                                                     <CommandItem
                                                                         value={catg.label}
-                                                                        key={catg.value+"command-item"}
+                                                                        key={catg.value + "command-item"}
                                                                         onSelect={() => {
                                                                             form.setValue("category", catg.value)
                                                                         }}
