@@ -20,6 +20,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             toast.success('logout failed:');
             alert("Something went wrong!!");
         } finally {
+            setIsOpen(false)
             localStorage.removeItem(tokenKey); // Store JWT token in localStorage
             setAuthenticate(false);
             navigate('/', { replace: true }); // Redirect to the home page or dashboard after login
@@ -84,19 +85,38 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             >
                                 About Us
                             </Link>
-                            <Link
-                                to="/profile"
-                                className="text-sm font-medium hover:text-muted-foreground"
-                            >
-                                Profile
-                            </Link>
-                            <Link
-                                to="#"
-                                className="text-sm font-medium hover:text-muted-foreground"
-                                onClick={handleLogout}
-                            >
-                                Logout
-                            </Link>
+                            {authenticate && <>
+                                <Link
+                                    to="/profile"
+                                    className="text-sm font-medium hover:text-muted-foreground"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Profile
+                                </Link>
+                                <Link
+                                    to="#"
+                                    className="text-sm font-medium hover:text-muted-foreground"
+                                    onClick={() => handleLogout}
+                                >
+                                    Logout
+                                </Link>
+                            </>
+                            }
+                            {!authenticate && <>
+                                <Link
+                                    to="/login"
+                                    className="text-sm font-medium hover:text-muted-foreground"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    className="text-sm font-medium hover:text-muted-foreground"
+                                >
+                                    Register
+                                </Link>
+                            </>
+                            }
                         </div>
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center gap-6">
@@ -157,20 +177,40 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                     >
                                         About Us
                                     </Link>
-                                    <Link
-                                        to="/profile"
-                                        className="text-lg font-medium"
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        Profile
-                                    </Link>
-                                    <Link
-                                        to="#"
-                                        className="text-lg font-medium"
-                                        onClick={handleLogout}
-                                    >
-                                        Logout
-                                    </Link>
+                                    {authenticate && <>
+                                        <Link
+                                            to="/profile"
+                                            className="text-lg font-medium"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            Profile
+                                        </Link>
+                                        <Link
+                                            to="#"
+                                            className="text-lg font-medium"
+                                            onClick={() => handleLogout}
+                                        >
+                                            Logout
+                                        </Link>
+                                    </>
+                                    }
+                                    {!authenticate && <>
+                                        <Link
+                                            to="/login"
+                                            className="text-lg font-medium"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            Login
+                                        </Link>
+                                        <Link
+                                            to="/register"
+                                            className="text-lg font-medium"
+                                            onClick={() => handleLogout}
+                                        >
+                                            Register
+                                        </Link>
+                                    </>
+                                    }
                                     <Link
                                         to="/dashboard"
                                         className="text-lg font-medium"
