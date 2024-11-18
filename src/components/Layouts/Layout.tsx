@@ -121,12 +121,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center gap-6">
 
-                            <Link
+                            {authenticate && <Link
                                 to="/dashboard"
                                 className="text-sm font-medium bg-primary-foreground text-primary px-4 py-2 rounded-md hover:bg-primary-foreground/90"
                             >
                                 Business Dashboard
                             </Link>
+                            }
                         </div>
 
                         {/* Mobile Navigation */}
@@ -211,13 +212,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                         </Link>
                                     </>
                                     }
-                                    <Link
+                                    {authenticate && <Link
                                         to="/dashboard"
                                         className="text-lg font-medium"
                                         onClick={() => setIsOpen(false)}
                                     >
                                         Business Dashboard
-                                    </Link>
+                                    </Link>}
                                 </nav>
                             </SheetContent>
                         </Sheet>
