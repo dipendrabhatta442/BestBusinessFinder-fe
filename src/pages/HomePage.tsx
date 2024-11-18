@@ -4,15 +4,16 @@ import useFetch from '../hooks/useFetch';
 import BusinessSearchForm from '@/components/Home/BusinessSearchForm';
 import PopularCategories from '@/components/Home/PopularCategories';
 import FeaturedBusinesses from '@/components/Home/FeaturedBusinesses';
+import FeaturedCampaign from '@/components/Home/FeaturedCampaign';
 
 const HomePage: React.FC = () => {
     const { data: businesses, loading, error, refetch } = useFetch('/business');
-    console.log({ businesses })
     return (
         <Layout>
             <BusinessSearchForm />
             <PopularCategories />
-            <FeaturedBusinesses businesses={businesses} />
+            <FeaturedBusinesses />
+            <FeaturedCampaign />
         </Layout>
     );
 };

@@ -5,6 +5,7 @@ export const loginSchema = z.object({
     password: z.string().min(6),
 });
 
+
 export const registerSchema = z.object({
     name: z.string().min(2),
     email: z.string().email(),
@@ -12,19 +13,31 @@ export const registerSchema = z.object({
     confirmPassword: z.string().optional(),
     category: z.string().optional(),
     location: z.string().optional(),
+    contactNumber: z.string().optional(),
     description: z.string().optional(),
 });
 export const offeringSchema = z.object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
+    title: z.string().min(2, "Name must be at least 2 characters"),
     description: z.string().min(10, "Description must be at least 10 characters"),
-    price: z.number().min(0, "Price must be a positive number"),
-    image: z
-        .instanceof(File)
-        .optional()
-        .refine((file) => file?.size && file.size <= 5 * 1024 * 1024, {
-            message: "Image must be less than 5MB",
-        }),
+    price: z.string(),
+
 });
+export const reviewSchema = z.object({
+    name: z.string(),
+    review: z.string(),
+    rating: z.string()
+
+
+});
+export const replySchema = z.object({
+    reply: z.string().min(10, {
+        message: "Reply message must be at least 10 characters.",
+    }),
+})
 export type RegisterSchemaType = z.infer<typeof registerSchema>
 export type LoginSchemaType = z.infer<typeof loginSchema>
-export type offeringSchemaType = z.infer<typeof offeringSchema>
+export type OfferingSchemaType = z.infer<typeof offeringSchema>
+export type ProfileSchemaType = z.infer<typeof registerSchema>
+export type ReviewSchemaType = z.infer<typeof reviewSchema>
+export type ReplySchemaType = z.infer<typeof replySchema>
+export const profileSchema = registerSchema;

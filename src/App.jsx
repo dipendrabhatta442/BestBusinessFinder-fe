@@ -7,8 +7,11 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import BusinessListPage from './pages/BusinessListPage';
 import AboutUs from './pages/AboutUs';
+import BusinessProfilePage from './pages/BusinessProfilePage';
+import BusinessDashboard from './pages/BusinessDashboard';
+import BusinessDetailsPage from './pages/BusinessDetailsPage';
+
 function App() {
-    const [count, setCount] = useState(0)
 
     return (
         <Router>
@@ -18,6 +21,9 @@ function App() {
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/search" element={<BusinessListPage />} />
+                <Route path="/profile" element={<BusinessProfilePage />} />
+                <Route path="/business/:slug" element={<BusinessDetailsPage />} />
+                <Route path="/dashboard" element={<BusinessDashboard />} />
             </Routes>
         </Router>
     )

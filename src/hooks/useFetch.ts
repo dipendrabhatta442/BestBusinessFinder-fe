@@ -10,7 +10,8 @@ const useFetch = (url: string) => {
         const fetchData = async () => {
             try {
                 const response = await API.get(url);
-                setData(response.data);
+                setData(response.data.data);
+
             } catch (err) {
                 setError('Error fetching data');
             } finally {
@@ -19,10 +20,10 @@ const useFetch = (url: string) => {
         };
         fetchData();
     }, [url]);
-    const refetch = async () => {
+    const refetch = async (newUrl?: string) => {
         try {
-            const response = await API.get(url);
-            setData(response.data);
+            const response = await API.get(newUrl ?? url);
+            setData(response.data.data);
         } catch (err) {
             setError('Error fetching data');
         } finally {

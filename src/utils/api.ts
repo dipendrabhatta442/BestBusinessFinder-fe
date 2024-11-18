@@ -10,6 +10,7 @@ const API = axios.create({
 });
 API.interceptors.request.use((request: any) => {
     const token = localStorage.getItem(tokenKey as string);
+    if (token === 'undefined' || token === 'null' || token === '{}' || !token) localStorage.removeItem(tokenKey)
     const timestamp = Math.round(Date.now() / 1000);
     const _crypto = CryptoJS.HmacSHA512('', `${appSecretKey}${timestamp}`);
     const signature = CryptoJS.enc.Hex.stringify(_crypto);
@@ -52,14 +53,15 @@ API.interceptors.response.use(
 );
 export default API;
 export const decodeJWT = (token: string) => {
-    console.log({ token })
+
     const base64Url = token?.split('.')[1]; // Extract the payload part of the token
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Replace URL-safe characters
+    const base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/'); // Replace URL-safe characters
     const payload = JSON.parse(window.atob(base64)); // Decode the base64 payload and parse it as JSON
     return payload;
 }
 export const isJWTValid = (token: string | null): boolean => {
-    if (!token) return false
+
+    if (!token || token === 'undefined') return false
     const decodedJWT = decodeJWT(token);
     const expirationTime = decodedJWT.exp * 1000; // Convert to milliseconds
     const currentTime = Date.now();

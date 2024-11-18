@@ -4,7 +4,7 @@ import { Button, Input, NavigationMenu, NavigationMenuContent, NavigationMenuIte
 import useAuthenticate from '@/hooks/useAuthenticate';
 import API from '../../utils/api';
 import { tokenKey } from '@/utils/constant';
-import { Toaster } from 'sonner';
+import { toast, Toaster } from 'sonner';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const navigate = useNavigate();
@@ -12,22 +12,22 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const handleLogout = async () => {
         try {
             const response = await API.post('/auth/logout');
+            toast.success('Logout successful!');
+        } catch (error) {
+            toast.success('logout failed:');
+            alert("Something went wrong!!");
+        } finally {
             localStorage.removeItem(tokenKey); // Store JWT token in localStorage
             setAuthenticate(false);
-            alert('Logout successful!');
-            navigate('/'); // Redirect to the home page or dashboard after login
-        } catch (error) {
-            console.error('Login failed:', error);
-            alert("Something went wrong!!");
+            navigate('/', { replace: true }); // Redirect to the home page or dashboard after login
         }
-
     }
     const categories = [
-        { name: "Restaurants", to: "#restaurants" },
-        { name: "Retail Shops", to: "#retail-shops" },
-        { name: "Services", to: "#services" },
-        { name: "Health & Wellness", to: "#health-wellness" },
-        { name: "Entertainment", to: "#entertainment" },
+        { name: "Restaurants", to: "/search?category=restaurants" },
+        { name: "Retail Shops", to: "/search?category=retail-shops" },
+        { name: "Services", to: "/search?category=services" },
+        { name: "Health & Wellness", to: "/search?category=health-wellness" },
+        { name: "Entertainment", to: "/search?category=entertainment" },
     ]
 
     return (
@@ -102,7 +102,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                             asChild
                                             className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                                         >
-                                            <Link to="#">Profile</Link>
+                                            <Link to="/profile">Profile</Link>
                                         </NavigationMenuLink>
                                     </NavigationMenuItem>
                                     <NavigationMenuItem>
@@ -120,7 +120,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
                             {authenticate && <>
                                 <Button variant="ghost" asChild>
-                                    <Link to="#">Business Dashboard</Link>
+                                    <Link to="/dashboard">Business Dashboard</Link>
                                 </Button>
                             </>
                             }

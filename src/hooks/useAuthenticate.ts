@@ -6,10 +6,14 @@ const useAuthenticate = () => {
     const [authenticate, setAuthenticate] = useState(false)
     useEffect(() => {
         if (localStorage) {
-            const token = localStorage.getItem(tokenKey)
-            const isValid = isJWTValid(token);
-            if (isValid) {
-                setAuthenticate(true)
+            const token = localStorage.getItem(tokenKey);
+            if (token) {
+                const isValid = isJWTValid(token);
+                if (isValid) {
+                    setAuthenticate(true)
+                }
+            } else {
+                localStorage.removeItem(tokenKey)
             }
         }
     }, [localStorage]);
