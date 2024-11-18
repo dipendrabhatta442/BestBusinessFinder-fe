@@ -11,7 +11,6 @@ function BusinessProfilePage() {
     const { authenticate } = useAuthenticate()
 
     const { data: businessProfile, error, loading } = useFetch('/auth/profile');
-    if (!authenticate) return <Navigate to={'/'} replace />
     return (
         <Layout>
             <div className="container mx-auto px-4 py-8 flex-1">

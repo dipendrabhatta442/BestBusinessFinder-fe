@@ -81,7 +81,6 @@ function BusinessDashboard() {
         { label: 'Retail Shop', value: 'retail-shop' },
         { label: 'Services', value: 'services' }
     ]
-    if (!authenticate) return <Navigate to={'/'} replace />;
     return (
         <Layout>
 
