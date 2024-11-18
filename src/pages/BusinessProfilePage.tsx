@@ -83,28 +83,14 @@ function BusinessProfilePage() {
                             </CardContent>
                         </Card>)
                         }
-                        <Card>
+                        {businessProfile?.reviews?.length === 0 && <Card>
                             <CardContent className="pt-6">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <p className="font-bold">User 2</p>
-                                    <div className="flex">
-                                        {[...Array(3)].map((_, i) => (
-                                            <Star
-                                                key={i + "star-selected" + _}
-                                                className="w-4 h-4 fill-primary text-primary"
-                                            />
-                                        ))}
-                                        {[...Array(2)].map((_, i) => (
-                                            <Star
-                                                key={i + 'start_unselected' + _}
-                                                className="w-4 h-4 text-muted-foreground"
-                                            />
-                                        ))}
-                                    </div>
+                                    <p className="font-bold">There are nor reviews to show! </p>
                                 </div>
                                 <p>Review: Good experience, but could improve on service time.</p>
                             </CardContent>
-                        </Card>
+                        </Card>}
                     </div>
                 </div>
             </div>
