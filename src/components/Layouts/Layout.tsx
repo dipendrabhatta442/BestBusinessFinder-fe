@@ -91,7 +91,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                 Profile
                             </Link>
                             <Link
-                                to="/logout"
+                                to="#"
                                 className="text-sm font-medium hover:text-muted-foreground"
                                 onClick={handleLogout}
                             >
@@ -165,9 +165,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                         Profile
                                     </Link>
                                     <Link
-                                        to="/logout"
+                                        to="#"
                                         className="text-lg font-medium"
-                                        onClick={() => setIsOpen(false)}
+                                        onClick={handleLogout}
                                     >
                                         Logout
                                     </Link>
