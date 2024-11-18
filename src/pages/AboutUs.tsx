@@ -11,7 +11,6 @@ function AboutUs() {
                     Our mission is to connect customers with local businesses, making it easy to discover, review and engage with local restaurants, retail shops, services, and more. We are dedicated to supporting the growth of local businesses by improving their online visibility and accessibility.
                 </p>
             </section>
-
             <section className="mt-16">
                 <h2 className="text-2xl font-bold text-center mb-8">Our values</h2>
                 <div className="grid gap-6 md:grid-cols-3">
