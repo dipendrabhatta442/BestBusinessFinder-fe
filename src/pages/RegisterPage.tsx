@@ -162,7 +162,7 @@ const RegisterPage: React.FC = () => {
                                                                 {category?.map((catg) => (
                                                                     <CommandItem
                                                                         value={catg.label}
-                                                                        key={catg.value}
+                                                                        key={catg.value+"command-item"}
                                                                         onSelect={() => {
                                                                             form.setValue("category", catg.value)
                                                                         }}

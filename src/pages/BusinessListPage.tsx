@@ -43,7 +43,7 @@ function BusinessListPage() {
             {
                 loading && (<><div className='flex justify-center gap-5'>{
                     [1, 2, 3, 4].map((num, index) => (
-                        <div key={num + index} className="flex flex-col space-y-3">
+                        <div key={num + index + "skeleton-search"} className="flex flex-col space-y-3">
                             <Skeleton className="h-[125px] w-[250px] rounded-xl" />
                             <div className="space-y-2">
                                 <Skeleton className="h-4 w-[250px]" />
@@ -61,7 +61,7 @@ function BusinessListPage() {
             }
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {businesses?.map((item: any, index: any) => (
-                    <Card key={item._id}>
+                    <Card key={item._id + index + "business-list-page"}>
                         <CardContent className="p-4">
                             {/* <div className="w-full aspect-square bg-muted mb-4" /> */}
                             <img className="w-full aspect-square bg-muted mb-4" src={appPublicUrl + item?.profileImage} />

@@ -59,14 +59,14 @@ function BusinessProfilePage() {
                 <div className="mt-8">
                     <h2 className="text-xl font-bold mb-4">User reviews</h2>
                     <div className="space-y-4">
-                        {businessProfile?.reviews?.length > 0 && businessProfile?.reviews?.map((review: any, index: number) => <Card key={index + review.name}>
+                        {businessProfile?.reviews?.length > 0 && businessProfile?.reviews?.map((review: any, index: number) => <Card key={index + review.name + "review-business"}>
                             <CardContent className="pt-6">
                                 <div className="flex items-center gap-2 mb-2">
                                     <p className="font-bold">{review?.name}</p>
                                     <div className="flex">
                                         {[...Array(4)].map((_, i) => (
                                             <Star
-                                                key={review?.rating ?? 0}
+                                                key={review?.rating + i + "review-profile"}
                                                 className="w-4 h-4 fill-primary text-primary"
                                             />
                                         ))}
@@ -86,13 +86,13 @@ function BusinessProfilePage() {
                                     <div className="flex">
                                         {[...Array(3)].map((_, i) => (
                                             <Star
-                                                key={i}
+                                                key={i + "star-selected" + _}
                                                 className="w-4 h-4 fill-primary text-primary"
                                             />
                                         ))}
                                         {[...Array(2)].map((_, i) => (
                                             <Star
-                                                key={i}
+                                                key={i + 'start_unselected' + _}
                                                 className="w-4 h-4 text-muted-foreground"
                                             />
                                         ))}

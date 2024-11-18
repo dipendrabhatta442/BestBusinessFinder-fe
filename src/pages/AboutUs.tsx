@@ -1,7 +1,6 @@
 import Layout from '@/components/Layouts/Layout'
 import { Card, CardContent, CardHeader } from '@/components/ui'
 import { AppWindow, BookOpenText, Bug, Database, DockIcon, Network, SquareMenu, UserCheck } from 'lucide-react'
-import React from 'react'
 
 function AboutUs() {
     return (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import API, { isJWTValid } from '../utils/api';
+import { isJWTValid } from '../utils/api';
 import { tokenKey } from '@/utils/constant';
 
 const useAuthenticate = () => {

@@ -15,7 +15,7 @@ function FeaturedBusinesses() {
 
     if (!businesses) return (<div className='flex justify-center gap-5'>{
         [1, 2, 3, 4].map((num, index) => (
-            <div key={num + index} className="flex flex-col space-y-3">
+            <div key={num + index + 'featured-business'} className="flex flex-col space-y-3">
                 <Skeleton className="h-[125px] w-[250px] rounded-xl" />
                 <div className="space-y-2">
                     <Skeleton className="h-4 w-[250px]" />
@@ -32,8 +32,8 @@ function FeaturedBusinesses() {
                 loading && (
                     <div className='flex justify-center gap-5'>{
                         [1, 2, 3, 4].map((num, index) => (
-                            <div key={num + index} className="flex flex-col space-y-3">
-                                <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+                            <div key={num + index + "skelleton-card"} className="flex flex-col space-y-3">
+                                < Skeleton className="h-[125px] w-[250px] rounded-xl" />
                                 <div className="space-y-2">
                                     <Skeleton className="h-4 w-[250px]" />
                                     <Skeleton className="h-4 w-[200px]" />
@@ -45,7 +45,7 @@ function FeaturedBusinesses() {
             }
             <div className={cn(`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4`)}>
                 {businesses?.map((item: any, index: number) => (
-                    <Card key={index}>
+                    <Card key={index + item.name + "business-card-section"}>
                         <CardContent className="p-6">
                             <img className="w-full aspect-square bg-muted mb-4" src={appPublicUrl + item.profileImage} />
                             <h3 className="font-medium ">{item.name}</h3>

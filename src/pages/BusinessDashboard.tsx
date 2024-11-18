@@ -267,7 +267,7 @@ function BusinessDashboard() {
                                         </TableHeader>
                                         <TableBody>
                                             {businessProfile?.offerings?.reverse()?.map((product: any, index: number) => (
-                                                <TableRow key={index}>
+                                                <TableRow key={product.title + index + 'dashboard'}>
                                                     <TableCell>
                                                         <img
                                                             src={appPublicUrl + product.image}

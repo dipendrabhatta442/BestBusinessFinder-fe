@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, Input, NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle, Sheet, SheetContent, SheetTrigger } from '../ui'
-import { Menu, Search } from 'lucide-react';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '../ui'
 import useAuthenticate from '@/hooks/useAuthenticate';
-import API from '../../utils/api';
-import { tokenKey } from '@/utils/constant';
 import { Navigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { Toaster } from 'sonner';
 
 const AuthPageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const navigate = useNavigate();
     const { authenticate } = useAuthenticate()
     let { pathname } = useLocation();
     if (authenticate) return <Navigate to={'/'} replace={true} />

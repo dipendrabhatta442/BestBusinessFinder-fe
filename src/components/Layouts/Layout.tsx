@@ -1,13 +1,16 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Input, NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '../ui'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, Sheet, SheetContent, SheetTrigger } from '../ui'
 import useAuthenticate from '@/hooks/useAuthenticate';
 import API from '../../utils/api';
 import { tokenKey } from '@/utils/constant';
 import { toast, Toaster } from 'sonner';
+import { ChevronDown, Menu } from 'lucide-react';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = React.useState(false)
+    const location = useLocation()
     const { authenticate, setAuthenticate } = useAuthenticate()
     const handleLogout = async () => {
         try {
@@ -36,105 +39,158 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div className="bg-primary text-primary-foreground py-2 text-center">
                 <h1 className="text-2xl font-bold">Local Business Finder</h1>
             </div>
-            <header className="border-b sticky top-0 bg-background z-10">
+            <header className="">
                 <div className="container mx-auto px-4">
-                    <div className="flex items-center justify-between h-16">
-                        <NavigationMenu>
-                            <NavigationMenuList className="hidden md:flex space-x-2">
-                                <NavigationMenuItem>
-                                    <NavigationMenuLink
-                                        asChild
-                                        className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    <nav className="flex items-center justify-between h-16">
+                        {/* Logo */}
+                        <Link to="/" className="block md:hidden text-xl font-bold">
+                            LBC
+                            {/* {(location?.pathname === '/' ? 'Home' : location?.pathname.slice(1))} */}
+                        </Link>
+                        <div className="hidden md:flex items-center gap-6">
+                            <Link
+                                to="/"
+                                className="text-sm font-medium hover:text-muted-foreground"
+                            >
+                                Home
+                            </Link>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button
+                                        variant="ghost"
+                                        className="text-sm font-medium hover:text-black flex items-center gap-1 h-auto p-1"
                                     >
-                                        <Link to="/">Home</Link>
-                                    </NavigationMenuLink>
-                                </NavigationMenuItem>
-                                <NavigationMenuItem>
-                                    <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
-                                    <NavigationMenuContent>
-                                        <ul className="grid w-[200px] gap-3 p-4">
-                                            {categories.map((category) => (
-                                                <li key={category.name}>
-                                                    <NavigationMenuLink asChild>
-                                                        <Link
-                                                            to={category.to}
-                                                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                                        >
-                                                            {category.name}
-                                                        </Link>
-                                                    </NavigationMenuLink>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </NavigationMenuContent>
-                                </NavigationMenuItem>
-                                <NavigationMenuItem>
-                                    <NavigationMenuLink
-                                        asChild
-                                        className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                                    >
-                                        <Link to="/about">About Us</Link>
-                                    </NavigationMenuLink>
-                                </NavigationMenuItem>
+                                        Categories
+                                        <ChevronDown className="h-4 w-4" />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="start">
+                                    {categories.map((category) => (
+                                        <DropdownMenuItem key={'layout' + category.to + 'desktop'}>
+                                            <Link
+                                                to={category.to}
+                                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                            >
+                                                {category.name}
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    ))}
 
-                                {!authenticate && <>
-                                    <NavigationMenuItem>
-                                        <NavigationMenuLink
-                                            asChild
-                                            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                                        >
-                                            <Link to="/login">Login</Link>
-                                        </NavigationMenuLink>
-                                    </NavigationMenuItem>
-                                    <NavigationMenuItem>
-                                        <NavigationMenuLink
-                                            asChild
-                                            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                                        >
-                                            <Link to="/register">Signup</Link>
-                                        </NavigationMenuLink>
-                                    </NavigationMenuItem>
-                                </>
-                                }
-                                {authenticate && <>
-                                    <NavigationMenuItem>
-                                        <NavigationMenuLink
-                                            asChild
-                                            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                                        >
-                                            <Link to="/profile">Profile</Link>
-                                        </NavigationMenuLink>
-                                    </NavigationMenuItem>
-                                    <NavigationMenuItem>
-                                        <NavigationMenuLink
-                                            asChild
-                                            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                                        >
-                                            <Link to="/" onClick={handleLogout}>Logout</Link>
-                                        </NavigationMenuLink>
-                                    </NavigationMenuItem>
-                                </>}
-                            </NavigationMenuList>
-                        </NavigationMenu>
-                        <div className="flex items-center space-x-2">
-
-                            {authenticate && <>
-                                <Button variant="ghost" asChild>
-                                    <Link to="/dashboard">Business Dashboard</Link>
-                                </Button>
-                            </>
-                            }
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                            <Link
+                                to="/about"
+                                className="text-sm font-medium hover:text-muted-foreground"
+                            >
+                                About Us
+                            </Link>
+                            <Link
+                                to="/profile"
+                                className="text-sm font-medium hover:text-muted-foreground"
+                            >
+                                Profile
+                            </Link>
+                            <Link
+                                to="/logout"
+                                className="text-sm font-medium hover:text-muted-foreground"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </Link>
                         </div>
-                    </div>
+                        {/* Desktop Navigation */}
+                        <div className="hidden md:flex items-center gap-6">
+
+                            <Link
+                                to="/dashboard"
+                                className="text-sm font-medium bg-primary-foreground text-primary px-4 py-2 rounded-md hover:bg-primary-foreground/90"
+                            >
+                                Business Dashboard
+                            </Link>
+                        </div>
+
+                        {/* Mobile Navigation */}
+                        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                            <SheetTrigger asChild className="md:hidden">
+                                <Button variant="ghost" size="icon">
+                                    <Menu className="h-6 w-6" />
+                                    <span className="sr-only">Toggle menu</span>
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                                <nav className="flex flex-col gap-4">
+                                    <Link
+                                        to="/"
+                                        className="text-lg font-medium"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        Home
+                                    </Link>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button
+                                                variant="ghost"
+                                                className="text-lg font-medium flex items-center justify-start gap-1 h-auto p-0"
+                                            >
+                                                Categories
+                                                <ChevronDown className="h-4 w-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent>
+                                            {categories.map((category) => (
+                                                <DropdownMenuItem key={'layout' + category.to}>
+                                                    <Link
+                                                        to={category.to}
+                                                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                                    >
+                                                        {category.name} xsdfsd
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                            ))}
+
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                    <Link
+                                        to="/about"
+                                        className="text-lg font-medium"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        About Us
+                                    </Link>
+                                    <Link
+                                        to="/profile"
+                                        className="text-lg font-medium"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        Profile
+                                    </Link>
+                                    <Link
+                                        to="/logout"
+                                        className="text-lg font-medium"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        Logout
+                                    </Link>
+                                    <Link
+                                        to="/dashboard"
+                                        className="text-lg font-medium"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        Business Dashboard
+                                    </Link>
+                                </nav>
+                            </SheetContent>
+                        </Sheet>
+                    </nav>
                 </div>
-            </header>
+            </header >
             <main className="flex-grow bg-background p-6">
                 {children}
             </main>
             <footer className="bg-muted text-muted-foreground py-4 px-6 text-center">
                 <p>&copy; {new Date().getFullYear()} Local Business Directory. All rights reserved.</p>
             </footer >
-        </div>
+        </div >
     )
 };
 

@@ -1,14 +1,12 @@
 import Layout from '@/components/Layouts/Layout'
-import { Button, Card, CardContent, CardHeader, CardTitle, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, Input, Popover, PopoverContent, PopoverTrigger, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from '@/components/ui'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from '@/components/ui'
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from '@/components/ui/form'
 import useFetch from '@/hooks/useFetch'
 import useFormHandler from '@/hooks/useFormHandler'
 import API from '@/utils/api'
-import { cn } from '@/utils/common'
 import { appPublicUrl } from '@/utils/constant'
 import { reviewSchema, ReviewSchemaType } from '@/utils/validationSchemas'
-import { Check, ChevronsUpDown, Command, Star } from 'lucide-react'
-import React from 'react'
+import { Star } from 'lucide-react'
 import { useParams } from "react-router-dom";
 import { toast } from 'sonner'
 
@@ -17,6 +15,7 @@ function BusinessDetailsPage() {
     const form = useFormHandler<ReviewSchemaType>(reviewSchema);
 
     const { data: businessDetails, error, loading, refetch } = useFetch(`/business/${slug}`);
+    const { data: businessProfile, error: profileError, loading: profileLoading, refetch: profileRefetch } = useFetch(`/auth/profile`);
     const onSubmit = async (data: any) => {
         try {
 
@@ -87,34 +86,36 @@ function BusinessDetailsPage() {
                 <div className="mt-8">
                     <h2 className="text-xl font-bold mb-4">User reviews</h2>
                     <div className="space-y-4">
-                        {businessDetails?.reviews?.length > 0 && businessDetails?.reviews?.map((review: any, index: number) => <Card key={index + review.name}>
-                            <CardContent className="pt-6">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <p className="font-bold">{review?.name}</p>
-                                    <div className="flex">
-                                        {[...Array(Number(4))].map((_, i) => (
-                                            i < Number(review?.rating) ? < Star
-                                                key={review?.rating ?? 0}
-                                                className="w-4 h-4 fill-primary text-primary"
-                                            /> : <Star className="w-4 h-4 text-muted-foreground" />
-                                        ))}
+                        {businessDetails?.reviews?.length > 0 && businessDetails?.reviews?.map((review: any, index: number) => (
+                            <Card key={index + review.name + 'review'}>
+                                <CardContent className="pt-6">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <p className="font-bold">{review?.name}</p>
+                                        <div className="flex">
+                                            {[...Array(Number(4))].map((_, i) => (
+                                                i < Number(review?.rating) ? <Star
+                                                    key={`${review.rating}-star-icon-filled` + crypto.getRandomValues(new Uint32Array(10))
+                                                    }
+                                                    className="w-4 h-4 fill-primary text-primary"
+                                                /> : <Star className="w-4 h-4 text-muted-foreground" key={`${review.rating}-star-icon-filled` + crypto.getRandomValues(new Uint32Array(10))} />
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                                <p>
-                                    Review: {review?.review}
-                                </p>
-                                {review.reply.length > 0 ? <div className='mb-2 italic'>
-                                    <hr />
-                                    <p className=""> Replyed By: {businessDetails?.name},</p>
-                                    <p className='ms-5'>{review.reply}</p>
-                                </div>
+                                    <p>
+                                        Review: {review?.review}
+                                    </p>
+                                    {review.reply.length > 0 ? <div className='mb-2 italic'>
+                                        <hr />
+                                        <p className=""> Replyed By: {businessDetails?.name},</p>
+                                        <p className='ms-5'>{review.reply}</p>
+                                    </div>
 
-                                    : null}
-                            </CardContent>
-                        </Card>)
+                                        : null}
+                                </CardContent>
+                            </Card>))
                         }
 
-                        <Card className='p-4'>
+                        {!(businessProfile && businessProfile?._id === businessDetails._id) && <Card className='p-4'>
                             <CardTitle>Add A Review</CardTitle>
                             <CardContent className="pt-6">
                                 <Form {...form}>
@@ -156,7 +157,7 @@ function BusinessDetailsPage() {
                                                                     <SelectValue placeholder="Select a category" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    {ratingOptions?.map((item, index) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}
+                                                                    {ratingOptions?.map((item, index) => <SelectItem key={item.value + index + "combox-rating"} value={item.value}>{item.label}</SelectItem>)}
 
                                                                 </SelectContent>
                                                             </Select>
@@ -192,7 +193,7 @@ function BusinessDetailsPage() {
                                     </form>
                                 </Form>
                             </CardContent>
-                        </Card>
+                        </Card>}
                     </div>
                 </div>
             </div>

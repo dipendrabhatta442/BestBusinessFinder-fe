@@ -1,4 +1,3 @@
-import React from 'react'
 import { Card, CardContent } from '../ui'
 import { cn } from '@/utils/common'
 
@@ -18,7 +17,7 @@ function FeaturedCampaign() {
                         coverImage: '/shopLocal.png',
                         description: 'Support your local shops and get exclusive deals'
                     }].map((item: any, index: number) => (
-                        <Card key={index}>
+                        <Card key={index + item.title + "campagin"}>
 
                             <CardContent className="p-6">
                                 <img
