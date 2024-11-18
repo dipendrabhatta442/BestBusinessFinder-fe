@@ -88,7 +88,7 @@ function BusinessProfilePage() {
                                 <div className="flex items-center gap-2 mb-2">
                                     <p className="font-bold">There are nor reviews to show! </p>
                                 </div>
-                                <p>Review: Good experience, but could improve on service time.</p>
+                               
                             </CardContent>
                         </Card>}
                     </div>
