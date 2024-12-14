@@ -4,13 +4,15 @@ import { AppWindow, BookOpenText, Bug, Database, DockIcon, Network, SquareMenu, 
 
 function AboutUs() {
     return (
-        <Layout>  <div className="container py-12">
+        <Layout>
+            <div className="container py-12">
             <section className="space-y-6 text-center">
                 <h1 className="text-3xl font-bold">Welcome to Local Business Directory</h1>
                 <p className="mx-auto max-w-[800px] text-muted-foreground">
                     Our mission is to connect customers with local businesses, making it easy to discover, review and engage with local restaurants, retail shops, services, and more. We are dedicated to supporting the growth of local businesses by improving their online visibility and accessibility.
                 </p>
             </section>
+
             <section className="mt-16">
                 <h2 className="text-2xl font-bold text-center mb-8">Our values</h2>
                 <div className="grid gap-6 md:grid-cols-3">

@@ -1,16 +1,30 @@
-import React from 'react'
-import { Badge, Button, Card, CardContent, CardFooter, Skeleton } from '../ui'
+import React, { useEffect, useState } from 'react'
+import { Badge, Button, Card, CardContent, CardFooter, Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, Skeleton } from '../ui'
 import { cn } from '@/utils/common'
 import useFetch from '@/hooks/useFetch';
 import { toast } from 'sonner';
 import { appPublicUrl } from '@/utils/constant';
 import { Link } from 'react-router-dom';
+import { EyeIcon } from 'lucide-react';
 
 function FeaturedBusinesses() {
     const { data: businesses, loading, error, refetch } = useFetch('/business');
+    const [api, setApi] = useState<any>()
+    const [current, setCurrent] = useState(0)
+    const [count, setCount] = useState(0)
 
+    useEffect(() => {
+        if (!api) return
+
+        setCount(api.scrollSnapList().length)
+        setCurrent(api.selectedScrollSnap() + 1)
+
+        api.on("select", () => {
+            setCurrent(api.selectedScrollSnap() + 1)
+        })
+    }, [api])
     if (error) {
-        toast.error(error?.toString())
+        console.log(error?.toString())
     }
 
     if (!businesses) return (<div className='flex justify-center gap-5'>{
@@ -43,25 +57,41 @@ function FeaturedBusinesses() {
                     </div>
                 )
             }
-            <div className={cn(`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4`)}>
-                {businesses?.map((item: any, index: number) => (
-                    <Card key={index + item.name + "business-card-section"}>
-                        <CardContent className="p-6">
-                            <img className="w-full aspect-square bg-muted mb-4" src={appPublicUrl + item.profileImage} />
-                            <h3 className="font-medium ">{item.name}</h3>
-                            <p className='italic text-muted-foreground text-sm'>{item.location}</p>
-                            <Badge className='mb-2'>{item.category}</Badge>
-                            <p className="text-sm text-muted-foreground">
-                                {item.description?.slice(0, 100)}
-                            </p>
+            <Carousel setApi={setApi} >
+                <CarouselContent>
+                    {businesses?.map((item: any, index: number) => (
+                        <CarouselItem key={index + item.name + "business-card-section"} className="md:basis-1/2 lg:basis-1/4">
+                            <Card>
+                                <CardContent className="p-6">
+                                    <img className="w-full aspect-square bg-muted mb-4" src={appPublicUrl + item.profileImage} />
+                                    <h3 className="font-medium ">{item.name}</h3>
+                                    <p className='italic text-muted-foreground text-sm'>{item.location}</p>
+                                    <Badge className='mb-2'>{item.category}</Badge>
+                                    <p className="text-sm text-muted-foreground">
+                                        {item.description?.slice(0, 100)}
+                                    </p>
 
-                        </CardContent>
-                        <CardFooter>
-                            <Button className="w-full" variant="outline" asChild>
-                                <Link to={`/business/${item?.slug}`}>View details</Link>
-                            </Button>
-                        </CardFooter>
-                    </Card>
+                                </CardContent>
+                                <CardFooter>
+                                    <Link to={`/business/${item?.slug}`} className='flex items-center gap-2'> <EyeIcon size={20} /> <span>view more</span></Link>
+                                </CardFooter>
+                            </Card>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+            </Carousel>
+            <div className="flex justify-center mt-4 space-x-2">
+                {Array.from({ length: count }).map((_, index) => (
+                    <Button
+                        key={index}
+                        variant="outline"
+                        size="icon"
+                        className={`w-2 h-2 rounded-full ${index === current - 1 ? 'bg-blue-600' : 'bg-gray-300'
+                            }`}
+                        onClick={() => api?.scrollTo(index)}
+                    />
                 ))}
             </div>
         </section >

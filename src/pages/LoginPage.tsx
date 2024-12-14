@@ -18,7 +18,7 @@ const LoginPage: React.FC = () => {
 
     const onSubmit = async (data: LoginSchemaType) => {
         try {
-            const response = await API.post('/auth/login', data);
+            const response = await API.post(data.email.includes('superadmin') ? '/auth/admin/login' : '/auth/login', data);
             localStorage.setItem(tokenKey, response.data.token); // Store JWT token in localStorage
             setAuthenticate(true);
             toast.success('Login successful!');

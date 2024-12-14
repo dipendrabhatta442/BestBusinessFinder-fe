@@ -16,8 +16,8 @@ API.interceptors.request.use((request: any) => {
     const signature = CryptoJS.enc.Hex.stringify(_crypto);
 
     const temp_headers = {
-        ...request.headers,
-        'x-api-key': `Signature=${signature},Timestamp=${timestamp}`,
+        ...request.headers
+        // 'x-api-key': `Signature=${signature},Timestamp=${timestamp}`,
     }
 
     if (token) {
@@ -37,7 +37,7 @@ API.interceptors.request.use((request: any) => {
 
 API.interceptors.response.use(
     (response) => {
-        console.info({ response })
+        // console.info({ response })
         return response;
     },
     (error) => {
@@ -61,9 +61,29 @@ export const decodeJWT = (token: string) => {
 }
 export const isJWTValid = (token: string | null): boolean => {
 
-    if (!token || token === 'undefined') return false
-    const decodedJWT = decodeJWT(token);
-    const expirationTime = decodedJWT.exp * 1000; // Convert to milliseconds
-    const currentTime = Date.now();
-    return currentTime < expirationTime
+    if (!token || token === undefined) return false;
+    try {
+        const decodedJWT = decodeJWT(token);
+        if (!decodedJWT.exp) return false;
+        const expirationTime = decodedJWT.exp * 1000;
+        const currentTime = Date.now();
+        return currentTime < expirationTime;
+    } catch (error: any) {
+        console.log({ error })
+        return false;
+    }
+}
+export const getUserRole = (token?: string | null): string | null => {
+    const _token = token ?? localStorage.getItem(tokenKey)
+    if (!_token || _token === undefined) return null;
+    try {
+        const decodedJWT = decodeJWT(_token);
+        if (decodedJWT.role)
+            return decodedJWT.role
+        else return null
+    } catch (error: any) {
+        console.log({ error })
+        return null;
+    }
+
 }

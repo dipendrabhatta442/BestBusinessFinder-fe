@@ -1,16 +1,44 @@
 import Layout from '@/components/Layouts/Layout'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
+import Unauthenticated from '@/components/Unauthenticated'
 import useAuthenticate from '@/hooks/useAuthenticate'
 import useFetch from '@/hooks/useFetch'
-import { appPublicUrl } from '@/utils/constant'
+import API, { getUserRole } from '@/utils/api'
+import { appPublicUrl, tokenKey } from '@/utils/constant'
 import { Star } from 'lucide-react'
-import React from 'react'
-import { Navigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 function BusinessProfilePage() {
-    const { authenticate } = useAuthenticate()
+    const navigate = useNavigate();
+    const [userRole, setUserRole] = useState<string>('Normal')
 
+    const { authenticate, setAuthenticate } = useAuthenticate()
+    const handleLogout = async () => {
+        try {
+            const response = await API.post('/auth/logout');
+            toast.success('Logout successful!');
+        } catch (error) {
+            toast.success('logout failed:');
+            alert("Something went wrong!!");
+        } finally {
+            localStorage.removeItem(tokenKey); // Store JWT token in localStorage
+            setAuthenticate(false);
+            navigate('/', { replace: true }); // Redirect to the home page or dashboard after login
+        }
+    }
     const { data: businessProfile, error, loading } = useFetch('/auth/profile');
+    useEffect(() => {
+        if (localStorage) {
+            setUserRole(getUserRole() ?? 'Normal')
+        }
+    }, [localStorage])
+    if (!authenticate) return <Unauthenticated />
+    if (userRole === "Admin") {
+        console.log({ userRole })
+        return <Navigate to={'/'} replace={true} />
+    }
     return (
         <Layout>
             <div className="container mx-auto px-4 py-8 flex-1">
@@ -88,7 +116,7 @@ function BusinessProfilePage() {
                                 <div className="flex items-center gap-2 mb-2">
                                     <p className="font-bold">There are nor reviews to show! </p>
                                 </div>
-                               
+
                             </CardContent>
                         </Card>}
                     </div>

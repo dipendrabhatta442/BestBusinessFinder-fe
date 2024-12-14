@@ -21,16 +21,10 @@ function BusinessListPage() {
     if (location) {
         queryParams.push(`location=${location}`)
     }
-    if (queryParams.length > 0) {
-        const str = queryParams.join('&');
-        // setFetchUrl(`/business?${str}`)
-        // refetch(`/business?${str}`)
-    }
+   
     const fetchUrl = `/business${queryParams?.length > 0 ? '?' + queryParams.join('&') : ''}`
 
     const { data: businesses, loading, error, refetch } = useFetch(fetchUrl);
-
-
     return (
         <Layout>
             <h2 className="text-2xl font-semibold text-center mb-8">

@@ -15,6 +15,7 @@ const useFetch = (url: string) => {
                 }
 
                 const response = await API.get(url);
+                console.log(response)
                 setData(response.data.data);
 
             } catch (err) {

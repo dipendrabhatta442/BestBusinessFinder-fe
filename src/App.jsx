@@ -10,6 +10,10 @@ import AboutUs from './pages/AboutUs';
 import BusinessProfilePage from './pages/BusinessProfilePage';
 import BusinessDashboard from './pages/BusinessDashboard';
 import BusinessDetailsPage from './pages/BusinessDetailsPage';
+import CampaignPage from './pages/CampaignPage';
+import AdminCampaignPage from './pages/AdminCampaignPage';
+import BusinessOfferingDetailsPage from './pages/BusinessOfferingDetailsPage';
+import CampaignDetailsPage from './pages/CampaignDetailsPage';
 
 function App() {
 
@@ -23,7 +27,11 @@ function App() {
                 <Route path="/search" element={<BusinessListPage />} />
                 <Route path="/profile" element={<BusinessProfilePage />} />
                 <Route path="/business/:slug" element={<BusinessDetailsPage />} />
+                <Route path="/business/offering/:slug" element={<BusinessOfferingDetailsPage />} />
                 <Route path="/dashboard" element={<BusinessDashboard />} />
+                <Route path="/campaign" element={<CampaignPage />} />
+                <Route path="/admin/campaign" element={<AdminCampaignPage />} />
+                <Route path="/campaign/details/:id" element={<CampaignDetailsPage />} />
             </Routes>
         </Router>
     )

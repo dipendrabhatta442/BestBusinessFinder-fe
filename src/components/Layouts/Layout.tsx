@@ -1,17 +1,19 @@
-import React from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate, NavLink, redirect, useLocation, useNavigate } from 'react-router-dom';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, Sheet, SheetContent, SheetTrigger } from '../ui'
 import useAuthenticate from '@/hooks/useAuthenticate';
-import API from '../../utils/api';
+import API, { getUserRole } from '../../utils/api';
 import { tokenKey } from '@/utils/constant';
 import { toast, Toaster } from 'sonner';
 import { ChevronDown, Menu } from 'lucide-react';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = React.useState(false)
+    const [userRole, setUserRole] = useState<string>('Normal')
+    const [isOpen, setIsOpen] = useState(false)
     const location = useLocation()
-    const { authenticate, setAuthenticate } = useAuthenticate()
+    const { authenticate, setAuthenticate } = useAuthenticate();
+    // localStorage.setItem(tokenKey, response.data.token); // Store JWT token in localStorage
     const handleLogout = async () => {
         try {
             const response = await API.post('/auth/logout');
@@ -33,6 +35,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         { name: "Health & Wellness", to: "/search?category=health-wellness" },
         { name: "Entertainment", to: "/search?category=entertainment" },
     ]
+    useEffect(() => {
+        if (localStorage) {
+            setUserRole(getUserRole() ?? 'Normal')
+        }
+    }, [localStorage])
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -85,7 +92,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             >
                                 About Us
                             </Link>
-                            {authenticate && <>
+                            {authenticate && userRole === 'BusinessUser' && <>
                                 <Link
                                     to="/profile"
                                     className="text-sm font-medium hover:text-muted-foreground"
@@ -93,15 +100,16 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                 >
                                     Profile
                                 </Link>
-                                <Link
-                                    to="#"
-                                    className="text-sm font-medium hover:text-muted-foreground"
-                                    onClick={() => handleLogout}
-                                >
-                                    Logout
-                                </Link>
+
                             </>
                             }
+                            {authenticate && <Link
+                                to="#"
+                                className="text-sm font-medium hover:text-muted-foreground"
+                                onClick={() => handleLogout()}
+                            >
+                                Logout
+                            </Link>}
                             {!authenticate && <>
                                 <Link
                                     to="/login"
@@ -121,11 +129,25 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center gap-6">
 
-                            {authenticate && <Link
+                            {authenticate && userRole === 'BusinessUser' && <Link
                                 to="/dashboard"
                                 className="text-sm font-medium bg-primary-foreground text-primary px-4 py-2 rounded-md hover:bg-primary-foreground/90"
                             >
                                 Business Dashboard
+                            </Link>
+                            }
+                            {authenticate && userRole === 'BusinessUser' && <Link
+                                to="/campaign"
+                                className="text-sm font-medium bg-primary-foreground text-primary px-4 py-2 rounded-md hover:bg-primary-foreground/90"
+                            >
+                                Manage Campaign
+                            </Link>
+                            }
+                            {authenticate && userRole === 'Admin' && <Link
+                                to="/admin/campaign"
+                                className="text-sm font-medium bg-primary-foreground text-primary px-4 py-2 rounded-md hover:bg-primary-foreground/90"
+                            >
+                                Manage Campaign
                             </Link>
                             }
                         </div>
@@ -164,7 +186,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                                         to={category.to}
                                                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                                     >
-                                                        {category.name} xsdfsd
+                                                        {category.name}
                                                     </Link>
                                                 </DropdownMenuItem>
                                             ))}
@@ -178,19 +200,21 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                     >
                                         About Us
                                     </Link>
-                                    {authenticate && <>
-                                        <Link
+                                    {
+                                        authenticate && userRole === 'BusinessUser' && <Link
                                             to="/profile"
                                             className="text-lg font-medium"
                                             onClick={() => setIsOpen(false)}
                                         >
                                             Profile
                                         </Link>
+                                    }
+                                    {authenticate && <>
+
                                         <Link
                                             to="#"
                                             className="text-lg font-medium"
-                                            onClick={() => handleLogout}
-                                        >
+                                            onClick={() => handleLogout()}                                        >
                                             Logout
                                         </Link>
                                     </>
@@ -206,19 +230,34 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                         <Link
                                             to="/register"
                                             className="text-lg font-medium"
-                                            onClick={() => handleLogout}
+                                        // onClick={() => handleLogout}
                                         >
                                             Register
                                         </Link>
                                     </>
                                     }
-                                    {authenticate && <Link
+                                    {authenticate && userRole === 'BusinessUser' && <Link
                                         to="/dashboard"
                                         className="text-lg font-medium"
                                         onClick={() => setIsOpen(false)}
                                     >
                                         Business Dashboard
                                     </Link>}
+                                    {authenticate && userRole === 'BusinessUser' && <Link
+                                        to="/campaign"
+                                        className="text-lg font-medium"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        Manage Campaign
+                                    </Link>}
+                                    {authenticate && userRole === 'Admin' && <Link
+                                        to="/admin/campaign"
+                                        className="text-lg font-medium"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        Manage Campaign
+                                    </Link>
+                                    }
                                 </nav>
                             </SheetContent>
                         </Sheet>

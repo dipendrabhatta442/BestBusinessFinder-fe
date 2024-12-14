@@ -7,7 +7,7 @@ import FeaturedBusinesses from '@/components/Home/FeaturedBusinesses';
 import FeaturedCampaign from '@/components/Home/FeaturedCampaign';
 
 const HomePage: React.FC = () => {
-    const { data: businesses, loading, error, refetch } = useFetch('/business');
+    // const { data: businesses, loading, error, refetch } = useFetch('/business');
     return (
         <Layout>
             <BusinessSearchForm />

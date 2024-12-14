@@ -1,6 +1,7 @@
 import Layout from '@/components/Layouts/Layout'
 import { Button, Card, CardContent, CardHeader, CardTitle, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Input, ScrollArea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Textarea } from '@/components/ui'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import Unauthenticated from '@/components/Unauthenticated'
 import useAuthenticate from '@/hooks/useAuthenticate'
 import useFetch from '@/hooks/useFetch'
 import useFormHandler from '@/hooks/useFormHandler'
@@ -81,6 +82,8 @@ function BusinessDashboard() {
         { label: 'Retail Shop', value: 'retail-shop' },
         { label: 'Services', value: 'services' }
     ]
+    if (!authenticate) return <Unauthenticated />
+
     return (
         <Layout>
 

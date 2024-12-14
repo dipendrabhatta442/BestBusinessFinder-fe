@@ -1,19 +1,33 @@
 import Layout from '@/components/Layouts/Layout'
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from '@/components/ui'
+import { Badge, Button, Card, CardContent, CardFooter, CardHeader, CardTitle, Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from '@/components/ui'
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from '@/components/ui/form'
 import useFetch from '@/hooks/useFetch'
 import useFormHandler from '@/hooks/useFormHandler'
 import API from '@/utils/api'
 import { appPublicUrl } from '@/utils/constant'
 import { reviewSchema, ReviewSchemaType } from '@/utils/validationSchemas'
-import { Star } from 'lucide-react'
-import { useParams } from "react-router-dom";
+import { ExternalLink, Star } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Link, useParams } from "react-router-dom";
 import { toast } from 'sonner'
 
 function BusinessDetailsPage() {
     const { slug } = useParams();
     const form = useFormHandler<ReviewSchemaType>(reviewSchema);
+    const [api, setApi] = useState<any>()
+    const [current, setCurrent] = useState(0)
+    const [count, setCount] = useState(0)
 
+    useEffect(() => {
+        if (!api) return
+
+        setCount(api.scrollSnapList().length)
+        setCurrent(api.selectedScrollSnap() + 1)
+
+        api.on("select", () => {
+            setCurrent(api.selectedScrollSnap() + 1)
+        })
+    }, [api])
     const { data: businessDetails, error, loading, refetch } = useFetch(`/business/${slug}`);
     const { data: businessProfile, error: profileError, loading: profileLoading, refetch: profileRefetch } = useFetch(`/auth/profile`);
     const onSubmit = async (data: any) => {
@@ -81,11 +95,60 @@ function BusinessDetailsPage() {
                         </p>
                     </CardContent>
                 </Card>
+                <Card className="mt-8">
+                    <CardHeader>
+                        <CardTitle>Bussiness offerings</CardTitle>
+                    </CardHeader>
+                    <CardContent >
+                        <Carousel setApi={setApi} >
+                            <CarouselContent>
+                                {businessDetails?.offerings?.map((offer: any, index: number) =>
+                                    <CarouselItem key={offer._id + index} className="sm:basis-1 md:basis-1/3 lg:basis-1/4">
+                                        <Card className="overflow-hidden">
+                                            <div className="aspect-square relative">
+                                                <img
+                                                    src={appPublicUrl + offer.image}
+                                                    alt={offer.title}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                {typeof offer.price === 'number' && (
+                                                    <Badge className="absolute top-2 right-2 bg-white/80 text-black backdrop-blur-sm">
+                                                        ${offer.price.toFixed(2)} AUD
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                            <CardContent className="p-4">
+                                                <h3 className="text-lg font-semibold line-clamp-1">{offer.title}</h3>
+                                                <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{offer.description}</p>
+                                            </CardContent>
+                                            <CardFooter className="p-4 pt-0 flex items-center">
+                                                <Link to={`/business/offering/${slug}?id=${offer.id}`} target='_blank' className='flex'><ExternalLink size={20} />&nbsp;<span>View More</span></Link>
 
+                                            </CardFooter>
+                                        </Card></CarouselItem>)}
+                            </CarouselContent>
+                            <CarouselPrevious className='left-[-1rem]' />
+                            <CarouselNext className='right-[-1rem]' />
+                        </Carousel>
+                        <div className="flex justify-center mt-4 space-x-2">
+                            {Array.from({ length: count }).map((_, index) => (
+                                <Button
+                                    key={index}
+                                    variant="outline"
+                                    size="icon"
+                                    className={`w-2 h-2 rounded-full ${index === current - 1 ? 'bg-blue-600' : 'bg-gray-300'
+                                        }`}
+                                    onClick={() => api?.scrollTo(index)}
+                                />
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
                 {/* User Reviews */}
                 <div className="mt-8">
                     <h2 className="text-xl font-bold mb-4">User reviews</h2>
                     <div className="space-y-4">
+                        {businessDetails?.reviews?.length === 0 && <p className='text-muted-foreground'>Currently there no review yet!</p>}
                         {businessDetails?.reviews?.length > 0 && businessDetails?.reviews?.map((review: any, index: number) => (
                             <Card key={index + review.name + 'review'}>
                                 <CardContent className="pt-6">
