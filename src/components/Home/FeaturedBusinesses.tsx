@@ -47,7 +47,7 @@ function FeaturedBusinesses() {
                     <div className='flex justify-center gap-5'>{
                         [1, 2, 3, 4].map((num, index) => (
                             <div key={num + index + "skelleton-card"} className="flex flex-col space-y-3">
-                                < Skeleton className="h-[125px] w-[250px] rounded-xl" />
+                                <Skeleton className="h-[125px] w-[250px] rounded-xl" />
                                 <div className="space-y-2">
                                     <Skeleton className="h-4 w-[250px]" />
                                     <Skeleton className="h-4 w-[200px]" />
@@ -67,8 +67,8 @@ function FeaturedBusinesses() {
                                     <h3 className="font-medium ">{item.name}</h3>
                                     <p className='italic text-muted-foreground text-sm'>{item.location}</p>
                                     <Badge className='mb-2'>{item.category}</Badge>
-                                    <p className="text-sm text-muted-foreground">
-                                        {item.description?.slice(0, 100)}
+                                    <p className="text-sm text-muted-foreground line-clamp-1">
+                                        {item.description}
                                     </p>
 
                                 </CardContent>
