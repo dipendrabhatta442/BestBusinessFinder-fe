@@ -240,7 +240,7 @@ export default function AdminCampaignPage() {
                             </TableCell>
                             <TableCell className="font-medium">{campaign.title}</TableCell>
                             <TableCell>{campaign.description}</TableCell>
-                            <TableCell>{campaign.createdBy}</TableCell>
+                            <TableCell>{campaign.createdBy?.email}</TableCell>
                             <TableCell>{getStatusBadge(campaign.status)}</TableCell>
                             <TableCell>{new Date(campaign.createdAt).toLocaleDateString()}</TableCell>
                             <TableCell>{campaign.remarks}</TableCell>
