@@ -57,43 +57,46 @@ function FeaturedBusinesses() {
                     </div>
                 )
             }
-            <Carousel setApi={setApi} >
-                <CarouselContent>
-                    {businesses?.map((item: any, index: number) => (
-                        <CarouselItem key={index + item?.name + "business-card-section"} className="md:basis-1/2 lg:basis-1/4">
-                            <Card>
-                                <CardContent className="p-6">
-                                    <img className="w-full aspect-square bg-muted mb-4" src={appPublicUrl + item.profileImage} />
-                                    <h3 className="font-medium ">{item?.name}</h3>
-                                    <p className='italic text-muted-foreground text-sm'>{item.location}</p>
-                                    <Badge className='mb-2'>{item.category}</Badge>
-                                    <p className="text-sm text-muted-foreground line-clamp-1">
-                                        {item.description}
-                                    </p>
+            {businesses && businesses.length > 0 && <>
+                <Carousel setApi={setApi} >
+                    <CarouselContent>
+                        {businesses?.map((item: any, index: number) => (
+                            <CarouselItem key={index + item?.name + "business-card-section"} className="md:basis-1/2 lg:basis-1/4">
+                                <Card>
+                                    <CardContent className="p-6">
+                                        <img className="w-full aspect-square bg-muted mb-4" src={appPublicUrl + item.profileImage} />
+                                        <h3 className="font-medium ">{item?.name}</h3>
+                                        <p className='italic text-muted-foreground text-sm'>{item.location}</p>
+                                        <Badge className='mb-2'>{item.category}</Badge>
+                                        <p className="text-sm text-muted-foreground line-clamp-1">
+                                            {item.description}
+                                        </p>
 
-                                </CardContent>
-                                <CardFooter>
-                                    <Link to={`/business/${item?.slug}`} className='flex items-center gap-2'> <EyeIcon size={20} /> <span>view more</span></Link>
-                                </CardFooter>
-                            </Card>
-                        </CarouselItem>
+                                    </CardContent>
+                                    <CardFooter>
+                                        <Link to={`/business/${item?.slug}`} className='flex items-center gap-2'> <EyeIcon size={20} /> <span>view more</span></Link>
+                                    </CardFooter>
+                                </Card>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                </Carousel>
+                <div className="flex justify-center mt-4 space-x-2">
+                    {Array.from({ length: count }).map((_, index) => (
+                        <Button
+                            key={index}
+                            variant="outline"
+                            size="icon"
+                            className={`w-2 h-2 rounded-full ${index === current - 1 ? 'bg-blue-600' : 'bg-gray-300'
+                                }`}
+                            onClick={() => api?.scrollTo(index)}
+                        />
                     ))}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-            </Carousel>
-            <div className="flex justify-center mt-4 space-x-2">
-                {Array.from({ length: count }).map((_, index) => (
-                    <Button
-                        key={index}
-                        variant="outline"
-                        size="icon"
-                        className={`w-2 h-2 rounded-full ${index === current - 1 ? 'bg-blue-600' : 'bg-gray-300'
-                            }`}
-                        onClick={() => api?.scrollTo(index)}
-                    />
-                ))}
-            </div>
+                </div>
+            </>}
+            {businesses.length === 0 && <p className='text-center'>Empty!, currently there is no any business register yet!</p>}
         </section >
     )
 }

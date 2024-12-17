@@ -62,48 +62,51 @@ function FeaturedCampaign() {
                         </div>
                     )
                 }
-
-                <Carousel setApi={setApi} >
-                    <CarouselContent>
-                        {campaigns?.map((campaign: any, index: number) => (
-                            <CarouselItem key={campaign._id} className="md:basis-1/2 lg:basis-1/4">
-                                <Card>
-                                    <CardHeader>
-                                        <img
-                                            src={appPublicUrl + campaign.image}
-                                            alt={campaign.title}
-                                            width={300}
-                                            height={200}
-                                            className="w-full h-40 object-cover rounded-t-lg"
-                                        />
-                                    </CardHeader>
-                                    <CardContent>
-                                        <CardTitle className="text-lg mb-2">{campaign.title}</CardTitle>
-                                        <CardDescription className="text-sm mb-2 line-clamp-1">{campaign.description}</CardDescription>
-                                        <Badge>{campaign.createdBy?.name}</Badge>
-                                    </CardContent>
-                                    <CardFooter>
-                                        <Link to={`campaign/details/${campaign._id}`} className='flex items-center gap-2'> <ExternalLink size={20} /> <span>view more</span></Link>
-                                    </CardFooter>
-                                </Card>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
-                </Carousel>
-                <div className="flex justify-center mt-4 space-x-2">
-                    {Array.from({ length: count }).map((_, index) => (
-                        <Button
-                            key={index}
-                            variant="outline"
-                            size="icon"
-                            className={`w-2 h-2 rounded-full ${index === current - 1 ? 'bg-blue-600' : 'bg-gray-300'
-                                }`}
-                            onClick={() => api?.scrollTo(index)}
-                        />
-                    ))}
-                </div>
+                {campaigns && campaigns.length > 0 &&
+                    <>
+                        <Carousel setApi={setApi} >
+                            <CarouselContent>
+                                {campaigns?.map((campaign: any, index: number) => (
+                                    <CarouselItem key={campaign._id} className="md:basis-1/2 lg:basis-1/4">
+                                        <Card>
+                                            <CardHeader>
+                                                <img
+                                                    src={appPublicUrl + campaign.image}
+                                                    alt={campaign.title}
+                                                    width={300}
+                                                    height={200}
+                                                    className="w-full h-40 object-cover rounded-t-lg"
+                                                />
+                                            </CardHeader>
+                                            <CardContent>
+                                                <CardTitle className="text-lg mb-2">{campaign.title}</CardTitle>
+                                                <CardDescription className="text-sm mb-2 line-clamp-1">{campaign.description}</CardDescription>
+                                                <Badge>{campaign.createdBy?.name}</Badge>
+                                            </CardContent>
+                                            <CardFooter>
+                                                <Link to={`campaign/details/${campaign._id}`} className='flex items-center gap-2'> <ExternalLink size={20} /> <span>view more</span></Link>
+                                            </CardFooter>
+                                        </Card>
+                                    </CarouselItem>
+                                ))}
+                            </CarouselContent>
+                            <CarouselPrevious />
+                            <CarouselNext />
+                        </Carousel>
+                        <div className="flex justify-center mt-4 space-x-2">
+                            {Array.from({ length: count }).map((_, index) => (
+                                <Button
+                                    key={index}
+                                    variant="outline"
+                                    size="icon"
+                                    className={`w-2 h-2 rounded-full ${index === current - 1 ? 'bg-blue-600' : 'bg-gray-300'
+                                        }`}
+                                    onClick={() => api?.scrollTo(index)}
+                                />
+                            ))}
+                        </div>
+                    </>}
+                {campaigns.length === 0 && <p className='text-center'>Empty!, currently there is no any campaigns posted yet!</p>}
             </div>
         </section >
     )
