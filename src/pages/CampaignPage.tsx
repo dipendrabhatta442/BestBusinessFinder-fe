@@ -222,7 +222,7 @@ export default function CampaignList() {
                             </TableCell>
                             <TableCell className="font-medium">{campaign?.title}</TableCell>
                             <TableCell>{campaign?.description}</TableCell>
-                            <TableCell title={campaign?.createdBy?.email}>{campaign?.createdBy??.name}</TableCell>
+                            <TableCell title={campaign?.createdBy?.email}>{campaign?.createdBy?.name}</TableCell>
                             <TableCell>{getStatusBadge(campaign?.status)}</TableCell>
                             <TableCell>{new Date(campaign?.createdAt).toLocaleDateString()}</TableCell>
 

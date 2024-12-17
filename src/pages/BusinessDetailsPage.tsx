@@ -153,7 +153,7 @@ function BusinessDetailsPage() {
                             <Card key={index + review?.name + 'review'}>
                                 <CardContent className="pt-6">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <p className="font-bold">{review??.name}</p>
+                                        <p className="font-bold">{review?.name}</p>
                                         <div className="flex">
                                             {[...Array(Number(4))].map((_, i) => (
                                                 i < Number(review?.rating) ? <Star
