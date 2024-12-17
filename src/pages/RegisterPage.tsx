@@ -24,15 +24,15 @@ const RegisterPage: React.FC = () => {
             if (!profileImage) {
                 toast.error('Please upload a logo or profile picture');
             }
-            if (data.password !== data.confirmPassword) throw new Error("Password and Confirm Password doesnt match!!")
+            if (data?.password !== data?.confirmPassword) throw new Error("Password and Confirm Password doesnt match!!")
             const form = new FormData();
             form.append('name', data?.name)
-            form.append('email', data.email)
-            form.append('password', data.password)
+            form.append('email', data?.email)
+            form.append('password', data?.password)
             form.append('profileImage', profileImage!)
-            form.append('location', data.location)
-            form.append('description', data.description)
-            form.append('category', data.category)
+            form.append('location', data?.location)
+            form.append('description', data?.description)
+            form.append('category', data?.category)
             const response = await API.post('/auth/register', form, {
                 headers: {
                     "Content-Type": 'multipart/form-data'

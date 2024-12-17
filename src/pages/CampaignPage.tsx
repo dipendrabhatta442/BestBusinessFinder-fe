@@ -215,19 +215,19 @@ export default function CampaignList() {
                 </TableHeader>
                 <TableBody>
                     {campaignData?.map((campaign: any, index: number) => (
-                        <TableRow key={campaign._id + index}>
+                        <TableRow key={campaign?._id + index}>
                             <TableCell className="font-medium">{index + 1}</TableCell>
                             <TableCell className="font-medium">
-                                <img className="w-32 aspect-square bg-muted mb-4" src={appPublicUrl + campaign.image} />
+                                <img className="w-32 aspect-square bg-muted mb-4" src={appPublicUrl + campaign?.image} />
                             </TableCell>
-                            <TableCell className="font-medium">{campaign.title}</TableCell>
-                            <TableCell>{campaign.description}</TableCell>
+                            <TableCell className="font-medium">{campaign?.title}</TableCell>
+                            <TableCell>{campaign?.description}</TableCell>
                             <TableCell title={campaign?.createdBy?.email}>{campaign?.createdBy??.name}</TableCell>
-                            <TableCell>{getStatusBadge(campaign.status)}</TableCell>
-                            <TableCell>{new Date(campaign.createdAt).toLocaleDateString()}</TableCell>
+                            <TableCell>{getStatusBadge(campaign?.status)}</TableCell>
+                            <TableCell>{new Date(campaign?.createdAt).toLocaleDateString()}</TableCell>
 
                             <TableCell><Button variant={'ghost'} onClick={() => {
-                                API.delete(`/campaign/${campaign._id}`).then(res => {
+                                API.delete(`/campaign/${campaign?._id}`).then(res => {
                                     toast.success('Successfully Removed Data');
                                     refetch();
                                 }).catch(e => toast.error(e.message))

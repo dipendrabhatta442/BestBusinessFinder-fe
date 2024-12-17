@@ -20,7 +20,7 @@ API.interceptors.request.use((request: any) => {
         // 'x-api-key': `Signature=${signature},Timestamp=${timestamp}`,
     }
 
-    if (token) {
+    if (token && request.url !== "/auth/register") {
         const isValid = isJWTValid(token);
         if (!isValid) {
             localStorage.removeItem(import.meta.env.TOKEN_KEY as string);

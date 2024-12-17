@@ -55,13 +55,13 @@ function BusinessListPage() {
             }
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {businesses?.map((item: any, index: any) => (
-                    <Card key={item._id + index + "business-list-page"}>
+                    <Card key={item?._id + index + "business-list-page"}>
                         <CardContent className="p-4">
                             {/* <div className="w-full aspect-square bg-muted mb-4" /> */}
                             <img className="w-full aspect-square bg-muted mb-4" src={appPublicUrl + item?.profileImage} />
                             <h3 className="font-medium"> {item?.name}</h3>
-                            <p className='italic text-muted-foreground text-sm'>{item.location}</p>
-                            <Badge className='mb-2'>{item.category}</Badge>
+                            <p className='italic text-muted-foreground text-sm'>{item?.location}</p>
+                            <Badge className='mb-2'>{item?.category}</Badge>
                             <p className="text-sm text-muted-foreground mb-4" title={item?.description as string}>
                                 {(item?.description as string)?.slice(0, 100)}
                             </p>

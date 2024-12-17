@@ -312,15 +312,15 @@ function BusinessDashboard() {
                     <CardContent className="space-y-4">
                         {businessProfile?.reviews?.map((item: any, index: number) => {
 
-                            return <div className="border rounded-lg p-4" key={index + item.review?.slice(0, 3)}>
-                                <p className="mb-2"><b>{item?.name}</b>: {item.review}</p>
-                                {item.reply.length > 0 ? <div className='mb-2 italic'>
+                            return <div className="border rounded-lg p-4" key={index + item?.review?.slice(0, 3)}>
+                                <p className="mb-2"><b>{item?.name}</b>: {item?.review}</p>
+                                {item?.reply?.length > 0 ? <div className='mb-2 italic'>
                                     <hr />
                                     <p className=""> Replyed By: {businessProfile??.name},</p>
-                                    <p className='ms-5'>{item.reply}</p>
+                                    <p className='ms-5'>{item?.reply}</p>
                                 </div>
 
-                                    : <ReplyModal reviewId={item.id} reviewText={item.review} />}
+                                    : <ReplyModal reviewId={item?.id} reviewText={item?.review} />}
                                 {/* <Button variant="outline" size="sm">
                                     Respond
                                 </Button> */}

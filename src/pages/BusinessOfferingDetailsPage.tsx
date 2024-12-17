@@ -17,8 +17,6 @@ function BusinessOfferingDetailsPage() {
 
     console.log({ slug })
     const { data: offeringDetails, error, loading, refetch } = useFetch(`/business/offering/${slug}?id=${offeringId}`);
-    const { data: businessProfile, error: profileError, loading: profileLoading, refetch: profileRefetch } = useFetch(`/auth/profile`);
-    console.log({ offeringDetails })
     const navigate = useNavigate()
     if (!offeringId) {
         return <div>Requested Offering not found</div>

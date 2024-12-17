@@ -103,26 +103,26 @@ function BusinessDetailsPage() {
                         <Carousel setApi={setApi} >
                             <CarouselContent>
                                 {businessDetails?.offerings?.map((offer: any, index: number) =>
-                                    <CarouselItem key={offer._id + index} className="sm:basis-1 md:basis-1/3 lg:basis-1/4">
+                                    <CarouselItem key={offer?._id + index} className="sm:basis-1 md:basis-1/3 lg:basis-1/4">
                                         <Card className="overflow-hidden">
                                             <div className="aspect-square relative">
                                                 <img
-                                                    src={appPublicUrl + offer.image}
-                                                    alt={offer.title}
+                                                    src={appPublicUrl + offer?.image}
+                                                    alt={offer?.title}
                                                     className="w-full h-full object-cover"
                                                 />
-                                                {typeof offer.price === 'number' && (
+                                                {typeof offer?.price === 'number' && (
                                                     <Badge className="absolute top-2 right-2 bg-white/80 text-black backdrop-blur-sm">
-                                                        ${offer.price.toFixed(2)} AUD
+                                                        ${offer?.price.toFixed(2)} AUD
                                                     </Badge>
                                                 )}
                                             </div>
                                             <CardContent className="p-4">
-                                                <h3 className="text-lg font-semibold line-clamp-1">{offer.title}</h3>
-                                                <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{offer.description}</p>
+                                                <h3 className="text-lg font-semibold line-clamp-1">{offer?.title}</h3>
+                                                <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{offer?.description}</p>
                                             </CardContent>
                                             <CardFooter className="p-4 pt-0 flex items-center">
-                                                <Link to={`/business/offering/${slug}?id=${offer.id}`} target='_blank' className='flex'><ExternalLink size={20} />&nbsp;<span>View More</span></Link>
+                                                <Link to={`/business/offering/${slug}?id=${offer?.id}`} target='_blank' className='flex'><ExternalLink size={20} />&nbsp;<span>View More</span></Link>
 
                                             </CardFooter>
                                         </Card></CarouselItem>)}
@@ -157,20 +157,20 @@ function BusinessDetailsPage() {
                                         <div className="flex">
                                             {[...Array(Number(4))].map((_, i) => (
                                                 i < Number(review?.rating) ? <Star
-                                                    key={`${review.rating}-star-icon-filled` + crypto.getRandomValues(new Uint32Array(10))
+                                                    key={`${review?.rating}-star-icon-filled` + crypto.getRandomValues(new Uint32Array(10))
                                                     }
                                                     className="w-4 h-4 fill-primary text-primary"
-                                                /> : <Star className="w-4 h-4 text-muted-foreground" key={`${review.rating}-star-icon-filled` + crypto.getRandomValues(new Uint32Array(10))} />
+                                                /> : <Star className="w-4 h-4 text-muted-foreground" key={`${review?.rating}-star-icon-filled` + crypto.getRandomValues(new Uint32Array(10))} />
                                             ))}
                                         </div>
                                     </div>
                                     <p>
                                         Review: {review?.review}
                                     </p>
-                                    {review.reply.length > 0 ? <div className='mb-2 italic'>
+                                    {review?.reply.length > 0 ? <div className='mb-2 italic'>
                                         <hr />
-                                        <p className=""> Replyed By: {businessDetails??.name},</p>
-                                        <p className='ms-5'>{review.reply}</p>
+                                        <p className=""> Replyed By: {businessDetails?.name},</p>
+                                        <p className='ms-5'>{review?.reply}</p>
                                     </div>
 
                                         : null}
@@ -178,7 +178,7 @@ function BusinessDetailsPage() {
                             </Card>))
                         }
 
-                        {!(businessProfile && businessProfile?._id === businessDetails._id) && <Card className='p-4'>
+                        {!(businessProfile && businessProfile?._id === businessDetails?._id) && <Card className='p-4'>
                             <CardTitle>Add A Review</CardTitle>
                             <CardContent className="pt-6">
                                 <Form {...form}>
@@ -220,7 +220,7 @@ function BusinessDetailsPage() {
                                                                     <SelectValue placeholder="Select a category" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    {ratingOptions?.map((item, index) => <SelectItem key={item.value + index + "combox-rating"} value={item.value}>{item.label}</SelectItem>)}
+                                                                    {ratingOptions?.map((item, index) => <SelectItem key={item?.value + index + "combox-rating"} value={item?.value}>{item?.label}</SelectItem>)}
 
                                                                 </SelectContent>
                                                             </Select>

@@ -59,7 +59,7 @@ function CampaignDetailsPage() {
                                 </div>
                                 <div className="text-right">
                                     <p className="text-sm text-muted-foreground">Created on</p>
-                                    <p className="font-medium">{new Date(campaignDetails?.createdAt).toLocaleDateString()}</p>
+                                    <p className="font-medium">{new Date(campaignDetails?.createdAt)?.toLocaleDateString()}</p>
                                 </div>
                             </div>
                         </CardHeader>
@@ -76,7 +76,7 @@ function CampaignDetailsPage() {
                                 </Avatar>
                                 <div>
                                     <p className="font-semibold">{campaignDetails?.createdBy?.name}</p>
-                                    <p className="text-sm text-muted-foreground">{campaignDetails?.createdBy.email}</p>
+                                    <p className="text-sm text-muted-foreground">{campaignDetails?.createdBy?.email}</p>
                                 </div>
                             </div>
                             <Separator />

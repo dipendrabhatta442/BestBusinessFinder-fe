@@ -376,29 +376,27 @@ function CampaignDialog({ campaign, isOpen, onOpenChange }: CampaignDialogProps)
                         <Separator />
                         <div className="space-y-2">
                             <h3 className="text-sm font-medium leading-none">Created User Details:</h3>
-                            {/* <pre>
-                                {JSON.stringify(campaign.createdBy, null, 2)}
-                            </pre> */}
-                            <img src={appPublicUrl + campaign?.createdBy.profileImage} className="size-20" alt={campaign?.name} />
+                            
+                            <img src={appPublicUrl + campaign?.createdBy?.profileImage} className="size-20" alt={campaign?.name} />
                             <p className="">
                                 <span className="text-xs uppercase">Email</span> &nbsp;
-                                <span className="text-sm text-muted-foreground">{campaign.createdBy.email}</span>
+                                <span className="text-sm text-muted-foreground">{campaign?.createdBy.email}</span>
                             </p>
                             <p className="">
                                 <span className="text-xs uppercase">Name</span> &nbsp;
-                                <span className="text-sm text-muted-foreground">{campaign.createdBy?.name}</span>
+                                <span className="text-sm text-muted-foreground">{campaign?.createdBy?.name}</span>
                             </p>
                             <p className="">
                                 <span className="text-xs uppercase">Category</span> &nbsp;
-                                <span className="text-sm text-muted-foreground">{campaign.createdBy.category}</span>
+                                <span className="text-sm text-muted-foreground">{campaign?.createdBy.category}</span>
                             </p>
                             <p className="">
                                 <span className="text-xs uppercase">Location</span> &nbsp;
-                                <span className="text-sm text-muted-foreground">{campaign.createdBy.location}</span>
+                                <span className="text-sm text-muted-foreground">{campaign?.createdBy.location}</span>
                             </p>
                             <p className="">
                                 <span className="text-xs uppercase">Description</span> &nbsp;
-                                <span className="text-sm text-muted-foreground line-clamp-1">{campaign.createdBy.description}</span>
+                                <span className="text-sm text-muted-foreground line-clamp-1">{campaign?.createdBy?.description}</span>
                             </p>
                             <Link to={'/'} > <ExternalLink />View More User Details</Link>
                         </div>
