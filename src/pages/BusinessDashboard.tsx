@@ -38,7 +38,7 @@ function BusinessDashboard() {
     const onBusinessSubmit = async (values: ProfileSchemaType) => {
 
         const form = new FormData();
-        form.append('name', values.name)
+        form.append('name', values?.name)
         form.append('profileImage', profileImage ?? businessProfile?.profileImage)
         form.append('description', values.description ?? businessProfile?.description)
         form.append('category', values?.category ?? businessProfile?.category)
@@ -56,7 +56,7 @@ function BusinessDashboard() {
             toast.error("Please upload image of product");
         } else {
             const form = new FormData();
-            form.append('name', businessProfile?.name)
+            form.append('name', businessProfile??.name)
             form.append('title', values.title)
             form.append('image', productImage)
             form.append('description', values.description)
@@ -313,10 +313,10 @@ function BusinessDashboard() {
                         {businessProfile?.reviews?.map((item: any, index: number) => {
 
                             return <div className="border rounded-lg p-4" key={index + item.review?.slice(0, 3)}>
-                                <p className="mb-2"><b>{item.name}</b>: {item.review}</p>
+                                <p className="mb-2"><b>{item?.name}</b>: {item.review}</p>
                                 {item.reply.length > 0 ? <div className='mb-2 italic'>
                                     <hr />
-                                    <p className=""> Replyed By: {businessProfile?.name},</p>
+                                    <p className=""> Replyed By: {businessProfile??.name},</p>
                                     <p className='ms-5'>{item.reply}</p>
                                 </div>
 

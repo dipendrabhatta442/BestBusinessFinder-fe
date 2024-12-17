@@ -80,7 +80,7 @@ function FeaturedCampaign() {
                                     <CardContent>
                                         <CardTitle className="text-lg mb-2">{campaign.title}</CardTitle>
                                         <CardDescription className="text-sm mb-2 line-clamp-1">{campaign.description}</CardDescription>
-                                        <Badge>{campaign.createdBy.name}</Badge>
+                                        <Badge>{campaign.createdBy?.name}</Badge>
                                     </CardContent>
                                     <CardFooter>
                                         <Link to={`campaign/details/${campaign._id}`} className='flex items-center gap-2'> <ExternalLink size={20} /> <span>view more</span></Link>

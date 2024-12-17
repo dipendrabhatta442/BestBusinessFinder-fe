@@ -71,11 +71,11 @@ function CampaignDetailsPage() {
                             <Separator />
                             <div className="flex items-center space-x-4">
                                 <Avatar className="w-12 h-12">
-                                    <AvatarImage src={appPublicUrl + campaignDetails?.createdBy?.profileImage} alt={campaignDetails?.createdBy.name} />
-                                    <AvatarFallback>{campaignDetails?.createdBy?.name?.charAt(0)}</AvatarFallback>
+                                    <AvatarImage src={appPublicUrl + campaignDetails?.createdBy?.profileImage} alt={campaignDetails?.createdBy?.name} />
+                                    <AvatarFallback>{campaignDetails?.createdBy??.name?.charAt(0)}</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <p className="font-semibold">{campaignDetails?.createdBy.name}</p>
+                                    <p className="font-semibold">{campaignDetails?.createdBy?.name}</p>
                                     <p className="text-sm text-muted-foreground">{campaignDetails?.createdBy.email}</p>
                                 </div>
                             </div>

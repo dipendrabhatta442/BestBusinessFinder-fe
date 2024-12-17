@@ -60,11 +60,11 @@ function FeaturedBusinesses() {
             <Carousel setApi={setApi} >
                 <CarouselContent>
                     {businesses?.map((item: any, index: number) => (
-                        <CarouselItem key={index + item.name + "business-card-section"} className="md:basis-1/2 lg:basis-1/4">
+                        <CarouselItem key={index + item?.name + "business-card-section"} className="md:basis-1/2 lg:basis-1/4">
                             <Card>
                                 <CardContent className="p-6">
                                     <img className="w-full aspect-square bg-muted mb-4" src={appPublicUrl + item.profileImage} />
-                                    <h3 className="font-medium ">{item.name}</h3>
+                                    <h3 className="font-medium ">{item?.name}</h3>
                                     <p className='italic text-muted-foreground text-sm'>{item.location}</p>
                                     <Badge className='mb-2'>{item.category}</Badge>
                                     <p className="text-sm text-muted-foreground line-clamp-1">

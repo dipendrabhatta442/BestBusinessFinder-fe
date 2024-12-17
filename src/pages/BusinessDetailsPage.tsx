@@ -150,10 +150,10 @@ function BusinessDetailsPage() {
                     <div className="space-y-4">
                         {businessDetails?.reviews?.length === 0 && <p className='text-muted-foreground'>Currently there no review yet!</p>}
                         {businessDetails?.reviews?.length > 0 && businessDetails?.reviews?.map((review: any, index: number) => (
-                            <Card key={index + review.name + 'review'}>
+                            <Card key={index + review?.name + 'review'}>
                                 <CardContent className="pt-6">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <p className="font-bold">{review?.name}</p>
+                                        <p className="font-bold">{review??.name}</p>
                                         <div className="flex">
                                             {[...Array(Number(4))].map((_, i) => (
                                                 i < Number(review?.rating) ? <Star
@@ -169,7 +169,7 @@ function BusinessDetailsPage() {
                                     </p>
                                     {review.reply.length > 0 ? <div className='mb-2 italic'>
                                         <hr />
-                                        <p className=""> Replyed By: {businessDetails?.name},</p>
+                                        <p className=""> Replyed By: {businessDetails??.name},</p>
                                         <p className='ms-5'>{review.reply}</p>
                                     </div>
 

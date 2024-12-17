@@ -379,14 +379,14 @@ function CampaignDialog({ campaign, isOpen, onOpenChange }: CampaignDialogProps)
                             {/* <pre>
                                 {JSON.stringify(campaign.createdBy, null, 2)}
                             </pre> */}
-                            <img src={appPublicUrl + campaign?.createdBy.profileImage} className="size-20" alt={campaign.name} />
+                            <img src={appPublicUrl + campaign?.createdBy.profileImage} className="size-20" alt={campaign?.name} />
                             <p className="">
                                 <span className="text-xs uppercase">Email</span> &nbsp;
                                 <span className="text-sm text-muted-foreground">{campaign.createdBy.email}</span>
                             </p>
                             <p className="">
                                 <span className="text-xs uppercase">Name</span> &nbsp;
-                                <span className="text-sm text-muted-foreground">{campaign.createdBy.name}</span>
+                                <span className="text-sm text-muted-foreground">{campaign.createdBy?.name}</span>
                             </p>
                             <p className="">
                                 <span className="text-xs uppercase">Category</span> &nbsp;

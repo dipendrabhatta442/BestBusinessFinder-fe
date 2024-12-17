@@ -79,7 +79,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                                 to={category.to}
                                                 className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                             >
-                                                {category.name}
+                                                {category?.name}
                                             </Link>
                                         </DropdownMenuItem>
                                     ))}
@@ -186,7 +186,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                                         to={category.to}
                                                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                                     >
-                                                        {category.name}
+                                                        {category?.name}
                                                     </Link>
                                                 </DropdownMenuItem>
                                             ))}
