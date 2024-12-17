@@ -62,7 +62,7 @@ function FeaturedCampaign() {
                         </div>
                     )
                 }
-                {campaigns && campaigns.length > 0 &&
+                {campaigns && campaigns?.length > 0 &&
                     <>
                         <Carousel setApi={setApi} >
                             <CarouselContent>
@@ -106,7 +106,7 @@ function FeaturedCampaign() {
                             ))}
                         </div>
                     </>}
-                {campaigns.length === 0 && <p className='text-center'>Empty!, currently there is no any campaigns posted yet!</p>}
+                {campaigns && campaigns?.length === 0 && <p className='text-center'>Empty!, currently there is no any campaigns posted yet!</p>}
             </div>
         </section >
     )

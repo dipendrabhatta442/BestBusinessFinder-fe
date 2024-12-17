@@ -96,7 +96,7 @@ function FeaturedBusinesses() {
                     ))}
                 </div>
             </>}
-            {businesses.length === 0 && <p className='text-center'>Empty!, currently there is no any business register yet!</p>}
+            {businesses && businesses?.length === 0 && <p className='text-center'>Empty!, currently there is no any business register yet!</p>}
         </section >
     )
 }
